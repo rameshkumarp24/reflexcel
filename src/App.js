@@ -78,6 +78,7 @@ function App() {
             border-radius: 5px;
             outline: none;
             -moz-appearance: textfield;
+            width: 200px; /* Default width */
           }
           .input-box::-webkit-outer-spin-button,
           .input-box::-webkit-inner-spin-button {
@@ -100,11 +101,20 @@ function App() {
           .result {
             margin-top: 10px;
             font-size: 18px;
-            font-weight: bold;
+            margin-right: 16px;
+            margin-left: 16px;
+            text-align: left; /* Left-align the result */
           }
           .reflexcel-text {
             font-size: 2em;
             font-weight: bold;
+          }
+
+          /* Media query for bigger screens */
+          @media (min-width: 768px) {
+            .input-box {
+              width: 300px; /* 1.5x the default width */
+            }
           }
         `}
       </style>
