@@ -53,6 +53,7 @@ function App() {
             onChange={handleChange} 
             placeholder="Enter a number" 
             className="input-box"
+            onKeyDown={(e) => e.key === 'ArrowUp' || e.key === 'ArrowDown' ? e.preventDefault() : null}
           />
           <button onClick={handleSubmit} className="submit-button">Submit</button>
           {divisors.length > 0 && (
@@ -76,6 +77,12 @@ function App() {
             border: 2px solid #61dafb;
             border-radius: 5px;
             outline: none;
+            -moz-appearance: textfield;
+          }
+          .input-box::-webkit-outer-spin-button,
+          .input-box::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
           }
           .submit-button {
             margin-left: 10px;
