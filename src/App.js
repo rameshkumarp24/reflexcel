@@ -39,7 +39,7 @@ function App() {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <a
-          className="App-link"
+          className="App-link reflexcel-text"
           href="https://reflexcel.com"
           target="_blank"
           rel="noopener noreferrer"
@@ -100,6 +100,10 @@ function App() {
           .result {
             margin-top: 10px;
             font-size: 18px;
+            font-weight: bold;
+          }
+          .reflexcel-text {
+            font-size: 2em;
             font-weight: bold;
           }
         `}
