@@ -8,8 +8,13 @@ function App() {
   const [isPrime, setIsPrime] = useState(null);
 
   const handleChange = (e) => {
-    const num = parseInt(e.target.value, 10);
     setNumber(e.target.value);
+    setDivisors([]);
+    setIsPrime(null);
+  };
+
+  const handleSubmit = () => {
+    const num = parseInt(number, 10);
     if (!isNaN(num) && num > 0) {
       const divs = new Set();
       let prime = num > 1;
@@ -22,6 +27,7 @@ function App() {
       }
       setDivisors(Array.from(divs).sort((a, b) => a - b));
       setIsPrime(prime);
+      setNumber('');
     } else {
       setDivisors([]);
       setIsPrime(null);
@@ -48,10 +54,11 @@ function App() {
             placeholder="Enter a number" 
             className="input-box"
           />
-          {number && (
+          <button onClick={handleSubmit} className="submit-button">Submit</button>
+          {divisors.length > 0 && (
             <div className="result">
               <p>Divisors: {divisors.join(', ')}</p>
-              <p>{isPrime !== null && (isPrime ? 'It is a Prime Number' : 'It is NOT a Prime Number')}</p>
+              <p>{isPrime !== null && (isPrime ? `${divisors[divisors.length - 1]} is a Prime Number` : `${divisors[divisors.length - 1]} is NOT a Prime Number`)}</p>
             </div>
           )}
         </div>
@@ -69,6 +76,19 @@ function App() {
             border: 2px solid #61dafb;
             border-radius: 5px;
             outline: none;
+          }
+          .submit-button {
+            margin-left: 10px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #61dafb;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+          .submit-button:hover {
+            background-color: #21a1f1;
           }
           .result {
             margin-top: 10px;
