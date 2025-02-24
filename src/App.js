@@ -63,7 +63,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          REFL[eˣ]CEL
+          <span>{'{eˣ}'} Reflexcel</span>
         </a>
         <div className="input-container">
           <input 
