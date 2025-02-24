@@ -4,32 +4,51 @@ import './App.css';
 
 function App() {
   const [number, setNumber] = useState('');
+  const [lastNumber, setLastNumber] = useState(null);
   const [divisors, setDivisors] = useState([]);
+  const [primeDivisors, setPrimeDivisors] = useState([]);
   const [isPrime, setIsPrime] = useState(null);
 
   const handleChange = (e) => {
     setNumber(e.target.value);
     setDivisors([]);
+    setPrimeDivisors([]);
     setIsPrime(null);
+  };
+
+  const isPrimeNumber = (num) => {
+    if (num < 2) return false;
+    for (let i = 2; i * i <= num; i++) {
+      if (num % i === 0) return false;
+    }
+    return true;
   };
 
   const handleSubmit = () => {
     const num = parseInt(number, 10);
     if (!isNaN(num) && num > 0) {
+      setLastNumber(num);
       const divs = new Set();
+      const primeDivs = new Set();
       let prime = num > 1;
+      
       for (let i = 1; i * i <= num; i++) {
         if (num % i === 0) {
           divs.add(i);
           divs.add(num / i);
+          if (isPrimeNumber(i)) primeDivs.add(i);
+          if (isPrimeNumber(num / i)) primeDivs.add(num / i);
           if (i !== 1 && i !== num) prime = false;
         }
       }
+      
       setDivisors(Array.from(divs).sort((a, b) => a - b));
+      setPrimeDivisors(Array.from(primeDivs).sort((a, b) => a - b));
       setIsPrime(prime);
       setNumber('');
     } else {
       setDivisors([]);
+      setPrimeDivisors([]);
       setIsPrime(null);
     }
   };
@@ -56,15 +75,19 @@ function App() {
             onKeyDown={(e) => e.key === 'ArrowUp' || e.key === 'ArrowDown' ? e.preventDefault() : null}
           />
           <button onClick={handleSubmit} className="submit-button">Submit</button>
+          {isPrime !== null && (
+            <p className="result">
+              {isPrime ? `${lastNumber} is a Prime Number` : `${lastNumber} is NOT a Prime Number`}
+            </p>
+          )}
           {divisors.length > 0 && (
             <div className="result">
               <p>Divisors: {divisors.join(', ')}</p>
-              <p>{isPrime !== null && (isPrime ? `${divisors[divisors.length - 1]} is a Prime Number` : `${divisors[divisors.length - 1]} is NOT a Prime Number`)}</p>
+              {primeDivisors.length > 0 && <p>Prime Divisors: {primeDivisors.join(', ')}</p>}
             </div>
           )}
         </div>
       </header>
-
       <style>
         {`
           .input-container {
@@ -78,7 +101,7 @@ function App() {
             border-radius: 5px;
             outline: none;
             -moz-appearance: textfield;
-            width: 200px; /* Default width */
+            width: 200px;
           }
           .input-box::-webkit-outer-spin-button,
           .input-box::-webkit-inner-spin-button {
@@ -103,17 +126,15 @@ function App() {
             font-size: 18px;
             margin-right: 16px;
             margin-left: 16px;
-            text-align: left; /* Left-align the result */
+            text-align: left;
           }
           .reflexcel-text {
             font-size: 2em;
             font-weight: bold;
           }
-
-          /* Media query for bigger screens */
           @media (min-width: 768px) {
             .input-box {
-              width: 300px; /* 1.5x the default width */
+              width: 300px;
             }
           }
         `}
