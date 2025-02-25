@@ -7,12 +7,14 @@ function App() {
   const [lastNumber, setLastNumber] = useState(null);
   const [divisors, setDivisors] = useState([]);
   const [primeDivisors, setPrimeDivisors] = useState([]);
+  const [primeFactorization, setPrimeFactorization] = useState([]);
   const [isPrime, setIsPrime] = useState(null);
 
   const handleChange = (e) => {
     setNumber(e.target.value);
     setDivisors([]);
     setPrimeDivisors([]);
+    setPrimeFactorization([]);
     setIsPrime(null);
   };
 
@@ -22,6 +24,24 @@ function App() {
       if (num % i === 0) return false;
     }
     return true;
+  };
+
+  const getPrimeFactorization = (num, primeDivs) => {
+    const factors = [];
+    let remaining = num;
+    
+    for (const prime of primeDivs) {
+      let power = 0;
+      while (remaining % prime === 0) {
+        power++;
+        remaining = remaining / prime;
+      }
+      if (power > 0) {
+        factors.push({ base: prime, power });
+      }
+      if (remaining === 1) break;
+    }
+    return factors;
   };
 
   const handleSubmit = () => {
@@ -42,15 +62,30 @@ function App() {
         }
       }
       
-      setDivisors(Array.from(divs).sort((a, b) => a - b));
-      setPrimeDivisors(Array.from(primeDivs).sort((a, b) => a - b));
+      const sortedDivs = Array.from(divs).sort((a, b) => a - b);
+      const sortedPrimeDivs = Array.from(primeDivs).sort((a, b) => a - b);
+      
+      setDivisors(sortedDivs);
+      setPrimeDivisors(sortedPrimeDivs);
+      setPrimeFactorization(getPrimeFactorization(num, sortedPrimeDivs));
       setIsPrime(prime);
       setNumber('');
     } else {
       setDivisors([]);
       setPrimeDivisors([]);
+      setPrimeFactorization([]);
       setIsPrime(null);
     }
+  };
+
+  const renderFactorization = () => {
+    return primeFactorization.map((factor, index) => (
+      <span key={index}>
+        {factor.base}
+        {factor.power > 1 && <sup>{factor.power}</sup>}
+        {index < primeFactorization.length - 1 && ' × '}
+      </span>
+    ));
   };
 
   return (
@@ -84,6 +119,9 @@ function App() {
             <div className="result">
               <p>Divisors: {divisors.join(', ')}</p>
               {primeDivisors.length > 0 && <p>Prime Divisors: {primeDivisors.join(', ')}</p>}
+              {primeFactorization.length > 0 && (
+                <p>Prime Factorization: {renderFactorization()}</p>
+              )}
             </div>
           )}
         </div>
