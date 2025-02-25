@@ -98,7 +98,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <span>Refl{'{eˣ}'}cel</span>
+          <span>Refl{'{e'}<sup>x</sup>{'}'}cel</span>
         </a>
         <div className="input-container">
           <input 
