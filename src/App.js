@@ -29,7 +29,7 @@ function App() {
   const getPrimeFactorization = (num, primeDivs) => {
     const factors = [];
     let remaining = num;
-    
+
     for (const prime of primeDivs) {
       let power = 0;
       while (remaining % prime === 0) {
@@ -51,7 +51,7 @@ function App() {
       const divs = new Set();
       const primeDivs = new Set();
       let prime = num > 1;
-      
+
       for (let i = 1; i * i <= num; i++) {
         if (num % i === 0) {
           divs.add(i);
@@ -61,10 +61,10 @@ function App() {
           if (i !== 1 && i !== num) prime = false;
         }
       }
-      
+
       const sortedDivs = Array.from(divs).sort((a, b) => a - b);
       const sortedPrimeDivs = Array.from(primeDivs).sort((a, b) => a - b);
-      
+
       setDivisors(sortedDivs);
       setPrimeDivisors(sortedPrimeDivs);
       setPrimeFactorization(getPrimeFactorization(num, sortedPrimeDivs));
@@ -98,30 +98,45 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <span>Refl{'{e'}<sup>x</sup>{'}'}cel</span>
+          <span>
+            Refl{'{e'}
+            <sup>x</sup>
+            {'}'}cel
+          </span>
         </a>
         <div className="input-container">
-          <input 
-            type="number" 
-            value={number} 
-            onChange={handleChange} 
-            placeholder="Enter a number" 
+          <input
+            type="number"
+            value={number}
+            onChange={handleChange}
+            placeholder="Enter a number"
             className="input-box"
-            onKeyDown={(e) => e.key === 'ArrowUp' || e.key === 'ArrowDown' ? e.preventDefault() : null}
+            onKeyDown={(e) =>
+              e.key === 'ArrowUp' || e.key === 'ArrowDown'
+                ? e.preventDefault()
+                : null
+            }
           />
-          <button onClick={handleSubmit} className="submit-button">Submit</button>
+          <button onClick={handleSubmit} className="submit-button">
+            Submit
+          </button>
           {isPrime !== null && (
             <p className="result">
-              {isPrime ? `${lastNumber} is a Prime Number` : `${lastNumber} is NOT a Prime Number`}
+              {isPrime
+                ? `${lastNumber} is a Prime Number`
+                : `${lastNumber} is NOT a Prime Number`}
             </p>
           )}
           {divisors.length > 0 && (
             <div className="result">
-              <p>Divisors: {divisors.join(', ')}</p>
-              {primeDivisors.length > 0 && <p>Prime Divisors: {primeDivisors.join(', ')}</p>}
               {primeFactorization.length > 0 && (
                 <p>Prime Factorization: {renderFactorization()}</p>
               )}
+              {primeDivisors.length > 0 && (
+                <p>Prime Divisors: {primeDivisors.join(', ')}</p>
+              )}
+
+              <p>Divisors: {divisors.join(', ')}</p>
             </div>
           )}
         </div>
