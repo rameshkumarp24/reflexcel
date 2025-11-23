@@ -99,9 +99,9 @@ function App() {
           rel="noopener noreferrer"
         >
           <span>
-            Refl{'{e'}
+            Refl{'e'}
             <sup>x</sup>
-            {'}'}cel
+            {''}cel
           </span>
         </a>
         <div className="input-container">
