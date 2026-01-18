@@ -94,7 +94,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <a
           className="App-link reflexcel-text"
-          href="https://reflexcel.com"
+          href="https://prime.reflexcel.com"
           target="_blank"
           rel="noopener noreferrer"
         >
